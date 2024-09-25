@@ -10,13 +10,13 @@ with open("wordnet.pickle", "rb") as f:
 def get_only_hangul(line):
 	parseText= re.compile('[^가-힣\s]').sub('',line)
 
-	return parseText
+	return parseText.strip()
 
 # 한글, 알파벳, 공백만 남기고 나머지는 모두 제거.
 def get_only_character(line):
 	parseText= re.compile('[^가-힣a-zA-Z\s]').sub('',line)
 
-	return parseText
+	return parseText.strip()
 
 def get_words(sentence):
 	return list(filter(lambda x:x!='',sentence.split(' ')))
@@ -240,8 +240,9 @@ def EDA_paragraph(paragraph, sentence_sep='.', alpha_sent=0.7, methods=['all'], 
 		if len(augmented_paragraphs) == num_aug: 
 			# 증강 문단들을 집합에 저장함으로써 중복을 피함 -> num_aug에 도달했을 때 증강 중단.
 			break
-	return list(augmented_paragraphs)	
-
+	
+	augmented_paragraphs = list(map(lambda x : x+'.',augmented_paragraphs)) # 마지막 문장에 마침표 추가.
+	return augmented_paragraphs
 
 def get_method_function(method):
 	if method == 'sr':
