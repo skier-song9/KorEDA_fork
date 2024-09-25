@@ -206,11 +206,10 @@ def EDA_paragraph(paragraph, sentence_sep='.', alpha_sent=0.7, methods=['all'], 
 	"""
 	# 줄바꿈 기호 제거
 	paragraph = re.compile('[\n\r]').sub('',paragraph)
-	# 문장 구분 + 한글만 남기기
+	# 문장 구분 + 한글&영어만 남기기
 	sentences = list(filter(lambda x:len(x)>0,map(get_only_character,paragraph.split(sentence_sep))))
 	sentences_index = list(range(sentences.__len__()))
-	# EDA를 적용할 문장 선택
-	random_index = random.sample(range(sentences.__len__()), int(sentences.__len__()*alpha_sent))
+	
 	# random_index 문장에 랜덤하게 EDA 적용
 	if methods[0] == 'all':
 		methods = ['sr','ri','rs','rd']
@@ -220,6 +219,9 @@ def EDA_paragraph(paragraph, sentence_sep='.', alpha_sent=0.7, methods=['all'], 
 	augmented_paragraphs = set()
 
 	while 1:
+		sentences_copy = sentences.copy()
+		# EDA를 적용할 문장 선택
+		random_index = random.sample(sentences_index, int(sentences.__len__()*alpha_sent))
 		for i in random_index:
 			random_method_index = random.randint(0, methods.__len__()-1) # 적용할 EDA 방식 랜덤 선택
 			method_func = get_method_function(methods[random_method_index])
@@ -232,9 +234,9 @@ def EDA_paragraph(paragraph, sentence_sep='.', alpha_sent=0.7, methods=['all'], 
 				n_changes = method_alphas[random_method_index]
 			a_words = method_func(words, n_changes)
 			# 기존 문장을 증강된 문장으로 대체
-			sentences[i] = ' '.join(a_words)
+			sentences_copy[i] = ' '.join(a_words)
 		# 문장들을 다시 합치고 문장 끝에 마침표를 붙여서 문단으로 반환
-		augmented_paragraphs.add('. '.join(sentences))
+		augmented_paragraphs.add('. '.join(sentences_copy))
 		if len(augmented_paragraphs) == num_aug: 
 			# 증강 문단들을 집합에 저장함으로써 중복을 피함 -> num_aug에 도달했을 때 증강 중단.
 			break
