@@ -48,7 +48,7 @@ WordNet만을 단순히 바꿔서 결괏값을 내기 때문에 의미가 변형
     ```plain
     Google이 발표한 AutoAugment가 대표적인 선행 연구이다. 이는 강화학습을 통해 이미지 데이터셋에 가장 적합한 증강 정책을 자동으로 찾아주는 알고리즘이다. 대단히 많은 GPU 자원을 토대로 증강 방법을 최적화했을 때 다양한 task에서 우수한 성능을 보였다. 이 연구는 특히 대규모 데이터셋에서의 일반화 성능을 크게 향상시켰다. 이후 다양한 연구들이 이를 기반으로 데이터 증강을 더욱 효율적으로 수행하는 방법을 제안하고 있다.
     ```
-    - EDA_paragraph(test_paragraph, sentence_sep='.', alpha_sent=0.6, methods=['rs','rd'], method_alphas=[0.2,0.1], num_aug=2) : test_paragraph의 5개 문장 중 3개(5 * 0.6)의 문장에 RS, RD method를 랜덤하게 적용하여 2개의 증강된 문단을 생성한다.
+    - `EDA_paragraph(test_paragraph, sentence_sep='.', alpha_sent=0.6, methods=['rs','rd'], method_alphas=[0.2,0.1], num_aug=2)` : test_paragraph의 5개 문장 중 3개(5 * 0.6)의 문장에 RS, RD method를 랜덤하게 적용하여 2개의 증강된 문단을 생성한다.
     - data augmentation 결과
     ```python
     ['Google이 발표한 AutoAugment가 연구이다 선행 대표적인. 이는 강화학습을 통해 이미지 데이터셋에 가장 적합한 정책을 자동으로 찾아주는 알고리즘이다.  대단히 많은 GPU 자원을 토대로 증강 방법을 최적화했을 때 다양한 task에서 우수한 성능을 보였다.  이 연구는 특히 대규모 데이터셋에서의 일반화 성능을 크게 향상시켰다. 이후 다양한 이를 기반으로 데이터 증강을 더욱 효율적으로 수행하는 방법을 있다', 
